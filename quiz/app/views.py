@@ -12,7 +12,7 @@ from django_filters import rest_framework as filters
 from drf_spectacular.settings import spectacular_settings
 from drf_spectacular.utils import OpenApiParameter, PolymorphicProxySerializer, extend_schema, extend_schema_view
 from drf_spectacular.views import AUTHENTICATION_CLASSES
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotAcceptable, NotFound
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
@@ -149,6 +149,9 @@ class ParticipantAcceptInvitation(GenericAPIView):
             )
         except UserQuiz.DoesNotExist:
             raise NotFound('Either not found or already started')
+
+        except UserQuiz.MultipleObjectsReturned:
+            raise NotAcceptable('You can\'t be invited to same quiz until you finish the first one')
 
         user_quiz.started_at = timezone.now()
         user_quiz.save()
