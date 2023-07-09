@@ -1,3 +1,5 @@
+![alt text](https://github.com/diego351/oper-assignment/blob/master/interactive_api_screenshot.png?raw=true)
+
 # Oper assignment
 
 1. install latest python (3.11), clone repository, change directory to it `cd quiz-oper-assignment`
@@ -10,7 +12,7 @@
 8. `python manage.py test`
 9. `python manage.py runserver`
 10. enter `127.0.0.1:8000/admin` via browser, login, create token, copy it
-11. enter `127.0.0.1:8000/docs` via browser to see api docs and interact with it. Paste it to Authorisation header on the right in a format `"Token <your token>"`. Most likely this you can work with the interactive API exclusively. Excuse my UUIDs, we don't want anybody to iterate easly over our API :)
+11. enter `127.0.0.1:8000/docs` via browser to see api docs and interact with it. Paste it to Authorisation header on the right in a format `"Token <your token>"`. Most likely you can work with the interactive API exclusively. Excuse my UUIDs, we don't want anybody to iterate easly over our API :)
 
 ## The general flow:
 
@@ -20,7 +22,7 @@
 4. Accept the invitation with `POST /api/quizes/{id}/accept` passing `quiz_id`. You will get `user_quiz_id` in return. This is new identifier other than quiz_id. Remember it.
 5. You can retrive the quiz content with `GET /api/user_quizes/{id}` passing `user_quiz_id`
 6. You can post your answers with `POST /api/user_quizes/{id}/answers` also using `user_quiz_id`.
-7. You can list all your quizes with `GET /api/quizes`. From participator side you will get your all active quizes that you accepted before and didn't finish. From creator side you see all your quiz history you previously created.
+7. You can list all your quizes with `GET /api/quizes`. From participator side you will get your all active quizes that you accepted before and didn't finish. From creator side you see all your quiz history you previously created. Participator won't know the correct answers.
 
 ## Imporant
 
