@@ -13,8 +13,12 @@
 11. enter 127.0.0.1:8000/docs via browser to see api docs and interactively interact with it. Paste it to Authorisation header on the right in a format `"Token <your token>"`
 
 todo:
+more tests
 
 add browsing viewsets
+
 progress of the quiz
+
 check results via api
+
 notify about results
