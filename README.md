@@ -26,7 +26,7 @@
 
 ## Imporant
 
-The project has been developed as quick as possible, due to strict time constraints, so no DDD, purely djangoish way. I wanted to develop as much functionalities as possible, very little tests.
+The project has been developed as quick as possible, due to strict time constraints, so no DDD, purely djangoish way. I wanted to develop as much functionalities as possible, very little tests. Happy to finish, but I run out of time.
 
 TODO:
 

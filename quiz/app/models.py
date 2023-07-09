@@ -86,7 +86,7 @@ class UserQuiz(BaseModel):
     results_sent = BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural = 'Invitations'
+        verbose_name_plural = 'Invitations (User quizes)'
 
     def __str__(self):
         return f'{self.quiz}'

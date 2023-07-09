@@ -129,7 +129,8 @@ class RetriveUserQuizView(RetrieveAPIView):
         qs = qs.filter(started_at__isnull=False)
         qs = qs.filter(finished_at__isnull=True)
         qs = qs.filter(user=self.request.user)
-        qs = qs.filter(started_at__lte=now - F('quiz__time_limit'))
+        qs = qs.annotate(end_time=F('started_at') + F('quiz__time_limit'))
+        qs = qs.filter(end_time__gte=now)
 
         qs = qs.prefetch_related('quiz__questions').prefetch_related('quiz__questions__possible_answers')
 
