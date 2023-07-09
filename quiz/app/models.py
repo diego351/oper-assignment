@@ -41,7 +41,7 @@ class User(AbstractUser, BaseModel):
         CREATOR = 'CREATOR'
 
     id = UUIDField(primary_key=True, default=uuid.uuid4)
-    user_type = TextField(choices=UserType.choices())
+    user_type = TextField(choices=UserType.choices(), default=UserType.CREATOR)
 
     def __str__(self):
         return self.email
