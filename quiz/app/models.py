@@ -1,13 +1,18 @@
+import uuid
+
+from app.helpers import EnumType
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (
     CASCADE,
+    PROTECT,
     BooleanField,
     DateTimeField,
+    DurationField,
     EmailField,
     ForeignKey,
     Model,
-    PositiveIntegerField,
     TextField,
+    UUIDField,
 )
 from django.utils import timezone
 
@@ -31,15 +36,21 @@ class BaseModel(Model):
 
 
 class User(AbstractUser, BaseModel):
-    pass
+    class UserType(EnumType):
+        PARTICIPANT = 'PARTICIPANT'
+        CREATOR = 'CREATOR'
+
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
+    user_type = TextField(choices=UserType.choices())
 
     def __str__(self):
         return self.email
 
 
 class Quiz(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
     name = TextField(max_length=1024, blank=False, null=False)
-    time_limit_minutes = PositiveIntegerField(null=False)
+    time_limit = DurationField(null=False, blank=False, help_text='ex. 1:00:00 meaning one hour')
     creator = ForeignKey(User, null=False, on_delete=CASCADE)
 
     def __str__(self):
@@ -47,6 +58,7 @@ class Quiz(BaseModel):
 
 
 class Question(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
     question = TextField(max_length=256, null=False, blank=False)
     quiz = ForeignKey(Quiz, null=False, related_name='questions', on_delete=CASCADE)
 
@@ -55,6 +67,7 @@ class Question(BaseModel):
 
 
 class PossibleAnswer(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
     question = ForeignKey(Question, related_name='possible_answers', null=False, on_delete=CASCADE)
     answer = TextField(max_length=256, null=False, blank=False)
     is_correct = BooleanField(null=False)
@@ -64,15 +77,23 @@ class PossibleAnswer(BaseModel):
 
 
 class UserQuiz(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
     email = EmailField(null=False, blank=False)
-    quiz = ForeignKey(Quiz, null=False, on_delete=CASCADE)
-    valid_until = DateTimeField(null=False)
-    started_at = DateTimeField(null=True)
-    finished_at = DateTimeField(null=True)
+    user = ForeignKey(User, null=False, blank=False, on_delete=PROTECT)
+    quiz = ForeignKey(Quiz, null=False, on_delete=CASCADE, related_name='userquiz')
+    started_at = DateTimeField(null=True, blank=True)  # invitation accepted at
+    finished_at = DateTimeField(null=True, blank=True)  # results submitted at
     results_sent = BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Invitations'
+
+    def __str__(self):
+        return f'{self.quiz}'
 
 
 class UserAnswer(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4)
     user_quiz = ForeignKey(UserQuiz, related_name='user_answers', null=False, on_delete=CASCADE)
     question = ForeignKey(Question, null=False, on_delete=CASCADE)
     answer = ForeignKey(PossibleAnswer, null=True, on_delete=CASCADE)

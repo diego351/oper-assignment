@@ -1,10 +1,21 @@
 asgiref==3.7.2
+attrs==23.1.0
 Django==4.2.3
-django-rest-framework==0.1.0
+django-filter==23.2
+django-nested-inline==0.4.6
 djangorestframework==3.14.0
-flake8 @ file:///home/conda/feedstock_root/build_artifacts/flake8_1669396691980/work
-mccabe @ file:///home/conda/feedstock_root/build_artifacts/mccabe_1643049622439/work
-pycodestyle @ file:///home/conda/feedstock_root/build_artifacts/pycodestyle_1669306857274/work
-pyflakes @ file:///home/conda/feedstock_root/build_artifacts/pyflakes_1669319921641/work
+drf-spectacular==0.26.3
+flake8==6.0.0
+inflection==0.5.1
+jsonschema==4.18.0
+jsonschema-specifications==2023.6.1
+mccabe==0.7.0
+pycodestyle==2.10.0
+pyflakes==3.0.1
 pytz==2023.3
+PyYAML==6.0
+referencing==0.29.1
+rpds-py==0.8.10
 sqlparse==0.4.4
+typing_extensions==4.7.1
+uritemplate==4.1.1

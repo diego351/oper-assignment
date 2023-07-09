@@ -1,22 +1,22 @@
-"""
-URL configuration for quiz project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+from app.views import (
+    InviteToQuizView,
+    ParticipantAcceptInvitation,
+    QuizListView,
+    RetriveUserQuizView,
+    SpectacularElementsView,
+    UploadUserAnswerView,
+)
 from django.contrib import admin
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('schema', SpectacularAPIView.as_view(), name="schema"),
+    path('docs', SpectacularElementsView.as_view()),
+    path('api/quizes', QuizListView.as_view(), name='quiz-list'),
+    path('api/quizes/<uuid:quiz_id>/invite', InviteToQuizView.as_view(), name='quiz-invite'),
+    path('api/quizes/<uuid:pk>/accept', ParticipantAcceptInvitation.as_view(), name='quiz-accept-invitation'),
+    path('api/user_quizes/<uuid:pk>', RetriveUserQuizView.as_view(), name='user-quiz-detail'),
+    path('api/user_quizes/<uuid:pk>/answers', UploadUserAnswerView.as_view(), name='user-answer-upload'),
 ]
